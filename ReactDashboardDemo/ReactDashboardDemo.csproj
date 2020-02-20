@@ -8,6 +8,10 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="React.AspNet" Version="5.1.2" />
+  </ItemGroup>
+
 
 
 </Project>
