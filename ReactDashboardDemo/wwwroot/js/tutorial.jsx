@@ -2,6 +2,7 @@
     constructor(props) {
         super(props);
         this.state = { data: [] };
+        this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
     }
     loadCommentsFromServer() {
         const xhr = new XMLHttpRequest();
@@ -11,6 +12,16 @@
             this.setState({ data: data });
         };
         xhr.send();
+    }
+    handleCommentSubmit(comment) {
+        const data = new FormData();
+        data.append('author', comment.author);
+        data.append('text', comment.text);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', this.props.submitUrl, true);
+        xhr.onload = () => this.loadCommentsFromServer();
+        xhr.send(data);
     }
     componentDidMount() {
         this.loadCommentsFromServer();
@@ -24,7 +35,7 @@
             <div className="commentBox">
                 <h1>Comments</h1>
                 <CommentList data={this.state.data} />
-                <CommentForm />
+                <CommentForm onCommentSubmit={this.handleCommentSubmit} />
             </div>
         );
     }
@@ -42,9 +53,46 @@ class CommentList extends React.Component {
 }
 
 class CommentForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { author: '', text: '' };
+        this.handleAuthorChange = this.handleAuthorChange.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleAuthorChange(e) {
+        this.setState({ author: e.target.value });
+    }
+    handleTextChange(e) {
+        this.setState({ text: e.target.value });
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        const author = this.state.author.trim();
+        const text = this.state.text.trim();
+        if (!text || !author) {
+            return;
+        }
+        this.props.onCommentSubmit({ author: author, text: text });
+        this.setState({ author: '', text: '' });
+    }
     render() {
         return (
-            <div className="commentForm">Hello, world! I am a CommentForm.</div>
+            <form className="commentForm" onSubmit={this.handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Your name"
+                    value={this.state.author}
+                    onChange={this.handleAuthorChange}
+                />
+                <input
+                    type="text"
+                    placeholder="Say something..."
+                    value={this.state.text}
+                    onChange={this.handleTextChange}
+                />
+                <input type="submit" value="Post" />
+            </form>
         );
     }
 }
@@ -81,6 +129,6 @@ const data = [
 ]
 
 ReactDOM.render(
-    <CommentBox url="/comments" pollInterval={2000} />,
+    <CommentBox url="/comments" submitUrl="/comments/new" pollInterval={2000} />,
     document.getElementById('content')
 );
