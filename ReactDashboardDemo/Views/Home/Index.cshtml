@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div id="root"></div>
+    @Html.React("App", new
+    {
 
-    <div class="row col-xl-12">
-        <div class="col-xl-6"></div>
-    </div>
+    })
 
     <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.0/umd/react.development.js"></script>
     <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.0/umd/react-dom.development.js"></script>
@@ -20,5 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="@Url.Content("~/js/Tutorial.jsx")"></script>
     <script src="@Url.Content("~/js/charts.jsx")"></script>
+    @Html.ReactInitJavaScript()
 </body>
 </html>
