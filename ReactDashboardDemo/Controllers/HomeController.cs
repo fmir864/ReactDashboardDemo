@@ -58,7 +58,7 @@ namespace ReactDashboardDemo.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            return View(_comments);
         }
     }
 }

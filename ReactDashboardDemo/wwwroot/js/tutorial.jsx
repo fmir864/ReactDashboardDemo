@@ -1,7 +1,7 @@
 ﻿class CommentBox extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = { data: this.props.initialData };
         this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
     }
     loadCommentsFromServer() {
@@ -32,7 +32,6 @@
         xhr.send(data);
     }
     componentDidMount() {
-        this.loadCommentsFromServer();
         window.setInterval(
             () => this.loadCommentsFromServer(),
             this.props.pollInterval,
@@ -107,7 +106,7 @@ class CommentForm extends React.Component {
 
 class Comment extends React.Component {
     rawMarkup() {
-        const md = new Remarkable();
+        const md = createRemarkable();
         const rawMarkup = md.render(this.props.children.toString());
         return { __html: rawMarkup };
     }
@@ -122,11 +121,7 @@ class Comment extends React.Component {
 }
 
 function createRemarkable() {
-    var remarkable =
-        'undefined' != typeof global && global.Remarkable
-            ? global.Remarkable
-            : window.Remarkable;
-
+    var remarkable = (("undefined" != typeof global) && (global.Remarkable)) ? global.Remarkable : window.Remarkable;
     return new remarkable();
 }
 
@@ -136,7 +131,7 @@ const data = [
     { id: 3, author: 'Jordan Walke', text: 'This is *another* comment' }
 ]
 
-ReactDOM.render(
-    <CommentBox url="/comments" submitUrl="/comments/new" pollInterval={2000} />,
-    document.getElementById('content')
-);
+//ReactDOM.render(
+//    <CommentBox url="/comments" submitUrl="/comments/new" pollInterval={2000} />,
+//    document.getElementById('content')
+//);
