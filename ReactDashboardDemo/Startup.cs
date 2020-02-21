@@ -70,9 +70,6 @@ namespace ReactDashboardDemo
                 //config
                 //  .SetLoadBabel(false)
                 //  .AddScriptWithoutTransform("~/js/bundle.server.js");
-                config
-                    .AddScript("~/js/remarkable.min.js")
-                    .AddScript("~/js/tutorial.jsx");
             });
 
             app.UseStaticFiles();

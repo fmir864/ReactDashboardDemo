@@ -1,26 +1,24 @@
-﻿@model IEnumerable<CommentModel>
-
-@{
+﻿@{
     Layout = null;
 }
 
 <html>
 <head>
     <title>Hello React</title>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    @Html.React("CommentBox", new
-     {
-         initialData = Model,
-         url = Url.Action("Comments"),
-         submitUrl = Url.Action("AddComment"),
-         pollInterval = 2000,
-     })
+    <div id="root"></div>
+
+    <div class="row col-xl-12">
+        <div class="col-xl-6"></div>
+    </div>
+
     <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.0/umd/react.development.js"></script>
     <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.0/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script src="@Url.Content("~/js/Tutorial.jsx")"></script>
-
-    @Html.ReactInitJavaScript()
+    <script src="@Url.Content("~/js/charts.jsx")"></script>
 </body>
 </html>
